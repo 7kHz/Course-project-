@@ -4,13 +4,8 @@ from tqdm import tqdm
 from time import sleep
 from VK import VK
 from YA import YA
-import configparser
+from README import VK_TOKEN, YA_TOKEN, user_id
 
-
-def config_data(config_file):
-    config = configparser.ConfigParser()
-    config.read(config_file)
-    return config['VK']['vk_token']
 
 def photos_upload_to_disk(photos_data, path_name):
     dct_likes = {}
@@ -34,8 +29,6 @@ def photos_upload_to_disk(photos_data, path_name):
 
 
 if __name__ == '__main__':
-    ya_token = input('Введите токен Полигона Яндекс.Диска: ')
-    user_id = input('Введите user_id или screen_name VK: ')
-    vk = VK(config_data('settings.ini'))
-    ya = YA(ya_token)
+    vk = VK(VK_TOKEN)
+    ya = YA(YA_TOKEN)
     photos_upload_to_disk(vk.photos_get_data(vk.user_ids_get(user_id)), ya.folder_create('/Photos_1'))
