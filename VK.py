@@ -1,5 +1,4 @@
 import requests
-from README import photos_quantity
 
 class VK:
     def __init__(self, access_token, version='5.131'):
@@ -17,6 +16,7 @@ class VK:
         url = 'https://api.vk.com/method/photos.get'
         params = {'owner_id': owner_id, 'album_id': album_id, 'extended': extended, 'photo_sizes': photo_sizes}
         response = requests.get(url, params={**self.params, **params})
+        photos_quantity = int(input('Введите количество загружаемых фото: '))
         photos_list = [albums['sizes'][-1]['url'] for albums in response.json()['response']['items'][:photos_quantity]]
         photos_type = [albums['sizes'][-1]['type'] for albums in response.json()['response']['items'][:photos_quantity]]
         photos_likes = [albums['likes']['count'] for albums in response.json()['response']['items'][:photos_quantity]]
